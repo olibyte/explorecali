@@ -117,11 +117,8 @@ public class TourRatingController {
      * @throws NoSuchElementException if no Tour found.
      */
     private Tour verifyTour(int tourId) throws NoSuchElementException {
-        Tour tour = tourRepository.findOne(tourId);
-        if (tour == null) {
-            throw new NoSuchElementException("Tour does not exist " + tourId);
-        }
-        return tour;
+        return tourRepository.findById(tourId).orElseThrow(() ->
+                new NoSuchElementException("Tour does not exist " + tourId));
     }
 
     /**
