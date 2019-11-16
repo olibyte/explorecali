@@ -58,6 +58,29 @@ public class TourRatingController {
         return new AbstractMap.SimpleEntry<String, Double>("average", average.isPresent()?average.getAsDouble():
                 null);
     }
+    @RequestMapping(method = RequestMethod.PUT)
+    public RatingDto updateWithPut(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
+        TourRating tourRating = verifyTourRating(tourId, ratingDto.getCustomerId());
+        tourRating.setScore(ratingDto.getScore());
+        tourRating.setComment(ratingDto.getComment());
+        return toDto(tourRatingRepository.save(tourRating));
+    }
+    @RequestMapping(method = RequestMethod.PATCH)
+    public RatingDto updateWithPatch(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
+        TourRating tourRating = verifyTourRating(tourId, ratingDto.getCustomerId());
+        if(ratingDto.getScore() != null) {
+            tourRating.setScore(ratingDto.getScore());
+        }
+        if(ratingDto.getComment() != null) {
+            tourRating.setComment(ratingDto.getComment());
+        }
+        return toDto(tourRatingRepository.save(tourRating));
+    }
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{customerId}")
+    public void delete(@PathVariable(value = "tourId") int tourId, @PathVariable(value = "customerId") int customerId) {
+        TourRating tourRating = verifyTourRating(tourId, customerId);
+        tourRatingRepository.delete(tourRating);
+    }
     /**
      * Convert the TourRating entity to a RatingDto
      *
