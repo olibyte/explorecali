@@ -28,4 +28,6 @@ public class TourService {
         return tourRepository.save( new Tour(title, description, blurb, price, duration, bullets, keywords, tourPackage,
                 difficulty, region));
     }
+    public Iterable<Tour> lookup() { return tourRepository.findAll(); }
+    public long total() { return tourRepository.count(); }
 }
