@@ -3,6 +3,7 @@ package com.example.ec.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The Tour contains all attributes of an Explore California Tour.
@@ -60,7 +61,7 @@ public class Tour implements Serializable{
         this.region = region;
     }
 
-    protected Tour() {
+    protected Tour(String title, String description, String blurb, Integer price, String duration, String bullets, String keywords, Optional<TourPackage> tourPackage, Difficulty difficulty, Region region) {
     }
 
     public Integer getId() {
